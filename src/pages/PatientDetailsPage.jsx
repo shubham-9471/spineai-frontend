@@ -6,7 +6,7 @@ import FloatingParticles from '../components/ui/FloatingParticles';
 
 export default function PatientDetailsPage() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: '', age: '', gender: '' });
+  const [form, setForm] = useState({ id: '', age: '', gender: '' });
   const [touched, setTouched] = useState({});
   const [focused, setFocused] = useState(null);
 
@@ -25,7 +25,7 @@ export default function PatientDetailsPage() {
 
   // Validation
   const errors = {};
-  if (!form.name.trim()) errors.name = 'Enter patient ID';
+  if (!form.id.trim()) errors.id = 'Enter patient ID';
   if (!form.age) errors.age = 'Age is required';
   else if (Number(form.age) < 1 || Number(form.age) > 120) errors.age = 'Age must be 1–120';
   if (!form.gender) errors.gender = 'Please select a gender';
@@ -35,13 +35,13 @@ export default function PatientDetailsPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isValid) {
-      setTouched({ name: true, age: true, gender: true });
+      setTouched({ id: true, age: true, gender: true });
       return;
     }
     navigate('/upload', {
       state: {
         patient: {
-          name: form.name.trim(),
+          id: form.id.trim(),
           age: Number(form.age),
           gender: form.gender,
         },
@@ -85,41 +85,41 @@ export default function PatientDetailsPage() {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="p-6 space-y-5">
-            {/* Full Name */}
+            {/* Patient ID */}
             <div>
-              <label htmlFor="patient-name" className="block text-xs font-mono text-spine-text-secondary tracking-widest mb-2">
-                FULL NAME
+              <label htmlFor="patient-id" className="block text-xs font-mono text-spine-text-secondary tracking-widest mb-2">
+                PATIENT ID
               </label>
               <div className="relative overflow-hidden rounded-lg">
                 <input
-                  id="patient-name"
+                  id="patient-id"
                   type="text"
-                  value={form.name}
-                  onChange={(e) => handleChange('name', e.target.value)}
-                  onFocus={() => handleFocus('name')}
-                  onBlur={() => handleBlur('name')}
-                  placeholder="Enter patient's full name"
+                  value={form.id}
+                  onChange={(e) => handleChange('id', e.target.value)}
+                  onFocus={() => handleFocus('id')}
+                  onBlur={() => handleBlur('id')}
+                  placeholder="Enter patient ID"
                   className={`
                     w-full bg-spine-bg border px-4 py-3 text-sm text-spine-text
                     placeholder:text-spine-text-secondary/50 outline-none transition-all rounded-lg
                     focus:border-spine-primary focus:ring-1 focus:ring-spine-primary/30
-                    ${touched.name && errors.name ? 'border-spine-danger' : 'border-spine-border'}
+                    ${touched.id && errors.id ? 'border-spine-danger' : 'border-spine-border'}
                   `}
                 />
                 <motion.div
                   initial={{ scaleY: 0 }}
-                  animate={{ scaleY: focused === 'name' ? 1 : 0 }}
+                  animate={{ scaleY: focused === 'id' ? 1 : 0 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                   className="absolute left-0 top-0 h-full w-[2px] bg-spine-primary origin-top"
                 />
               </div>
-              {touched.name && errors.name && (
+              {touched.id && errors.id && (
                 <motion.p
                   initial={{ opacity: 0, y: -5 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="text-xs text-spine-danger mt-1.5 font-mono"
                 >
-                  {errors.name}
+                  {errors.id}
                 </motion.p>
               )}
             </div>
