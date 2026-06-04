@@ -25,7 +25,7 @@ export default function PatientDetailsPage() {
 
   // Validation
   const errors = {};
-  if (!form.name.trim()) errors.name = 'Full name is required';
+  if (!form.name.trim()) errors.name = 'Enter patient ID';
   if (!form.age) errors.age = 'Age is required';
   else if (Number(form.age) < 1 || Number(form.age) > 120) errors.age = 'Age must be 1–120';
   if (!form.gender) errors.gender = 'Please select a gender';
